@@ -20,3 +20,5 @@ define( 'ANZARIANZ_PLUGIN_URL', rtrim( plugin_dir_url( __FILE__ ), '/' ) );
 require_once  __DIR__ . '/includes/user-fields.php';
 //User api
 require_once  __DIR__ . '/includes/user-api.php';
+//User roles
+require_once  __DIR__ . '/includes/user-role.php';
