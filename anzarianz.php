@@ -18,3 +18,5 @@ define( 'ANZARIANZ_PLUGIN_URL', rtrim( plugin_dir_url( __FILE__ ), '/' ) );
 
 //User Custom Fileds
 require_once  __DIR__ . '/inc/user-fields.php';
+//User api
+require_once  __DIR__ . '/inc/user-api.php';

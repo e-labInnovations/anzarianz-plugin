@@ -23,7 +23,7 @@ function anzarianz_fields( $user ) {
 			</td>
 		</tr>
 		<tr>
-			<th><label for="room_type"><?php esc_html_e( 'Is single room?', 'anzarianz' ); ?></label></th>
+			<th><label for="room_type"><?php esc_html_e( 'Room Type', 'anzarianz' ); ?></label></th>
 			<td>
                 <select name="room_type" id="room_type">
                     <option value="normal" <?php echo $room_type == 'normal'?'selected':''; ?>>Normal</option>
@@ -41,10 +41,6 @@ function anzarianz_user_profile_update_errors( $errors, $update, $user ) {
 	if ( $update ) {
 		return;
 	}
-
-	// if ( empty( $_POST['year_of_birth'] ) ) {
-	// 	$errors->add( 'year_of_birth_error', __( '<strong>ERROR</strong>: Please enter your year of birth.', 'crf' ) );
-	// }
 }
 
 //Saving the field
