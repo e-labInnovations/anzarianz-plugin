@@ -10,7 +10,55 @@ function anzarianz_fields( $user ) {
 	$room_type = get_the_author_meta( 'room_type', $user->ID );
 	$mobile_no = get_the_author_meta( 'mobile_no', $user->ID );
 	$permanent_address = get_the_author_meta( 'permanent_address', $user->ID );
+	$date_of_admission = get_the_author_meta( 'date_of_admission', $user->ID );
+	$dob = get_the_author_meta( 'dob', $user->ID );
+	$food_preference = get_the_author_meta( 'food_preference', $user->ID );
+	$religion_and_cast = get_the_author_meta( 'religion_and_cast', $user->ID );
 	?>
+
+	<table class="form-table">
+		<tr>
+			<th><label for="date_of_admission"><?php esc_html_e( 'Date of Admission', 'anzarianz' ); ?></label></th>
+			<td>
+				<input type="date"
+			       id="date_of_admission"
+			       name="date_of_admission"
+			       value="<?php echo esc_attr( $date_of_admission ); ?>"
+				/>
+			</td>
+		</tr>
+		<tr>
+			<th><label for="dob"><?php esc_html_e( 'Date of Birth', 'anzarianz' ); ?></label></th>
+			<td>
+				<input type="date"
+			       id="dob"
+			       name="dob"
+			       value="<?php echo esc_attr( $dob ); ?>"
+				/>
+			</td>
+		</tr>
+		<tr>
+			<th><label for="food_preference"><?php esc_html_e( 'Room Type', 'anzarianz' ); ?></label></th>
+			<td>
+                <select name="food_preference" id="food_preference">
+                    <option value="nonveg" <?php echo $food_preference == 'nonveg'?'selected':''; ?>>Non-Vegetarian</option>
+                    <option value="veg" <?php echo $food_preference == 'veg'?'selected':''; ?>>Vegetarian</option>
+                </select>
+			</td>
+		</tr>
+		<tr>
+			<th><label for="religion_and_cast"><?php esc_html_e( 'Religion And Cast', 'anzarianz' ); ?></label></th>
+			<td>
+				<input type="text"
+			       id="religion_and_cast"
+			       name="religion_and_cast"
+			       value="<?php echo esc_attr( $religion_and_cast ); ?>"
+			       class="regular-text"
+				/>
+			</td>
+		</tr>
+	</table>
+
 	<h3><?php esc_html_e( 'Room Details', 'anzarianz' ); ?></h3>
 	<table class="form-table">
 		<tr>
