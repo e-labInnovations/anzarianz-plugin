@@ -24,3 +24,5 @@ require_once  __DIR__ . '/includes/user-api.php';
 require_once  __DIR__ . '/includes/user-role.php';
 //leaves table
 require_once  __DIR__ . '/includes/leaves-db-table.php';
+//leaves api
+require_once  __DIR__ . '/includes/leaves-api.php';

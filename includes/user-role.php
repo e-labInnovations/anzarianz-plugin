@@ -21,10 +21,20 @@ function anzarianz_new_role() {
         )
     );
 
-    //Student role
+    //Warden role
     add_role(
         'warden',
         'Warden',
+        array(
+            'read'         => true,
+            'delete_posts' => false
+        )
+    );
+
+    //Super Student role
+    add_role(
+        'super_student',
+        'Super Student',
         array(
             'read'         => true,
             'delete_posts' => false

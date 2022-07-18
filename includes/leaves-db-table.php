@@ -31,13 +31,24 @@ function onAdminRefresh01() {
 	global $wpdb;
 	$table_name = $wpdb->prefix . 'anzarianz_leaves';
 
+    // $now = new DateTime();
+
+    // $wpdb->insert($table_name, array(
+    //     'user_id' => 1,
+    //     'added_by' => 1,
+    //     'leaving_at' => $now->format('Y-m-d H:i:s'),
+    //     'rejoining_at' => $now->format('Y-m-d H:i:s'),
+    //     'reason' => 'Vacation',
+    // ));
+
     $now = new DateTime();
+    $rejoining_time = date("Y-m-d H:i:s", strtotime('2022-07-18 08:37:00'));
 
     $wpdb->insert($table_name, array(
         'user_id' => 1,
         'added_by' => 1,
         'leaving_at' => $now->format('Y-m-d H:i:s'),
-        'rejoining_at' => $now->format('Y-m-d H:i:s'),
+        'rejoining_at' => $rejoining_time,
         'reason' => 'Vacation',
     ));
 }
