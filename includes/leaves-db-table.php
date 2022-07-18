@@ -19,6 +19,7 @@ function anzarianz_create_leave_db() {
         reason varchar(60) NOT NULL DEFAULT '',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        status varchar(20) NOT NULL DEFAULT 'added',
 		UNIQUE KEY id (id)
 	) $charset_collate;";
 
