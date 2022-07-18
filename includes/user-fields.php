@@ -130,6 +130,12 @@ function anzarianz_update_profile_fields( $user_id ) {
 
     update_user_meta( $user_id, 'room_no', $_POST['room_no'] );
     update_user_meta( $user_id, 'room_type', $_POST['room_type'] );
+    update_user_meta( $user_id, 'mobile_no', $_POST['mobile_no'] );
+    update_user_meta( $user_id, 'permanent_address', $_POST['permanent_address'] );
+    update_user_meta( $user_id, 'date_of_admission', $_POST['date_of_admission'] );
+    update_user_meta( $user_id, 'dob', $_POST['dob'] );
+    update_user_meta( $user_id, 'food_preference', $_POST['food_preference'] );
+    update_user_meta( $user_id, 'religion_and_cast', $_POST['religion_and_cast'] );
 }
 
 ?>
