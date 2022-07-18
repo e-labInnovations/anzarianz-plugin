@@ -22,3 +22,5 @@ require_once  __DIR__ . '/includes/user-fields.php';
 require_once  __DIR__ . '/includes/user-api.php';
 //User roles
 require_once  __DIR__ . '/includes/user-role.php';
+//leaves table
+require_once  __DIR__ . '/includes/leaves-db-table.php';
