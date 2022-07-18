@@ -3,6 +3,7 @@
 add_action('rest_api_init', 'anzarianz_register_leaves');
 function anzarianz_register_leaves() {
     //List of leaves
+    //admin/warden/super_student can get others leaves also by providing user_id
     register_rest_route('anzarianz/v1', 'leaves', array(
         'methods' => WP_REST_SERVER::READABLE,
         'callback' => 'anzarianz_get_leaves',
@@ -24,6 +25,15 @@ function anzarianz_register_leaves() {
     register_rest_route('anzarianz/v1', 'leaves/(?P<id>\d+)', array(
         'methods' => WP_REST_SERVER::READABLE,
         'callback' => 'anzarianz_get_single_leaves',
+        'permission_callback'   => function () {
+            return current_user_can('administrator') || current_user_can('student') || current_user_can('warden') || current_user_can('super_student');
+        }
+    ));
+
+    //Update single leaves
+    register_rest_route('anzarianz/v1', 'leaves/(?P<id>\d+)', array(
+        'methods' => 'POST',
+        'callback' => 'anzarianz_update_single_leaves',
         'permission_callback'   => function () {
             return current_user_can('administrator') || current_user_can('student') || current_user_can('warden') || current_user_can('super_student');
         }
@@ -160,6 +170,38 @@ function anzarianz_get_single_leaves($data) {
         return $error;
     }
 
+    return $leave;
+}
+
+function anzarianz_update_single_leaves($data) {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'anzarianz_leaves';
+    $leave_id = intval($data['id']);
+    $user = wp_get_current_user();
+
+    $added_by       = $user->ID;
+    $leaving_at     = $data['leaving_at'];
+    $rejoining_at   = $data['rejoining_at'];
+    $reason         = sanitize_text_field($data['reason']);
+
+    $query = "UPDATE $table_name SET added_by = $added_by";
+
+    if($leaving_at) {
+        $leaving_time = date("Y-m-d H:i:s", strtotime($leaving_at));
+        $query = $query . ", leaving_at = '" . $leaving_time . "'";
+    }
+    if($rejoining_at) {
+        $rejoining_time = date("Y-m-d H:i:s", strtotime($rejoining_at));
+        $query = $query . ", rejoining_at = '" . $leaving_time . "'";
+    }
+    if($reason) {
+        $query = $query . ", reason = '" . $reason . "'";
+    }
+    $query = $query . " WHERE id = $leave_id";
+    $wpdb->query($query);
+
+    $query = "SELECT * FROM $table_name WHERE id = $leave_id";
+    $leave = $wpdb->get_results($query)[0];
     return $leave;
 }
 
