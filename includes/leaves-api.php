@@ -38,6 +38,15 @@ function anzarianz_register_leaves() {
             return current_user_can('administrator') || current_user_can('student') || current_user_can('warden') || current_user_can('super_student');
         }
     ));
+
+    //Delete single leaves
+    register_rest_route('anzarianz/v1', 'leaves/(?P<id>\d+)/delete', array(
+        'methods' => 'POST',
+        'callback' => 'anzarianz_delete_single_leaves',
+        'permission_callback'   => function () {
+            return current_user_can('administrator') || current_user_can('student') || current_user_can('warden') || current_user_can('super_student');
+        }
+    ));
 }
 
 function anzarianz_get_leaves($data) {
@@ -130,8 +139,6 @@ function anzarianz_add_leaves($data) {
         'reason' => $reason,
     ));
   
-
-
     $query = "SELECT * FROM $table_name WHERE id = $wpdb->insert_id";
     $query_results = $wpdb->get_results($query);
     return $query_results[0];
@@ -203,6 +210,45 @@ function anzarianz_update_single_leaves($data) {
     $query = "SELECT * FROM $table_name WHERE id = $leave_id";
     $leave = $wpdb->get_results($query)[0];
     return $leave;
+}
+
+function anzarianz_delete_single_leaves($data) {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'anzarianz_leaves';
+    $leave_id = intval($data['id']);
+    $user = wp_get_current_user();
+
+    $query = "SELECT * FROM $table_name WHERE id = $leave_id";
+    $leave = $wpdb->get_results($query)[0];
+    
+    $error = new WP_Error();
+    if(!$leave) {
+        $error->add(
+            'rest_forbidden',
+            "item with id $leave_id not found",
+            array('status' => 404)
+        );
+    }
+
+    if(!(in_array('administrator', $user->roles) || in_array('warden', $user->roles) || in_array('super_student', $user->roles))) {
+        if($leave->user_id != $user->ID) {
+            $error->add(
+                'rest_forbidden',
+                'Sorry, you are not allowed to do that!!!.',
+                array('status' => rest_authorization_required_code())
+            );
+        }
+    }
+    
+    // Send the error
+    if (!empty($error->get_error_codes())) {
+        return $error;
+    }
+
+    $query = "DELETE FROM $table_name WHERE id = $leave_id";
+    $wpdb->query($query);
+
+    return array("success" => true);
 }
 
 //Whitelisting endpoints for JWT
