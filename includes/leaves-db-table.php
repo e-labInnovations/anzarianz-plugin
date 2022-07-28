@@ -17,6 +17,7 @@ function anzarianz_create_leave_db() {
         leaving_at DATETIME NOT NULL,
         rejoining_at DATETIME NOT NULL,
         reason varchar(60) NOT NULL DEFAULT '',
+        rejection_note varchar(60) NOT NULL DEFAULT '',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         status varchar(20) NOT NULL DEFAULT 'added',
