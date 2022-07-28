@@ -34,18 +34,18 @@ class leave_List_Table extends WP_List_Table {
         $status = $_GET['status'];
         if($status) {
             if($status == 'all' || $status == 'added') {
-                $where_status = "status != 'trash' AND status != 'spam' AND status != 'approved' AND status != 'reject'";
+                $where_status = "status != 'trash' AND status != 'spam' AND status != 'approved' AND status != 'rejected'";
             } else if($status == 'spam') {
                 $where_status = "status = 'spam'";
             } else if($status == 'trash') {
                 $where_status = "status = 'trash'";
             } else if($status == 'approved') {
                 $where_status = "status = 'approved'";
-            } else if($status == 'reject') {
+            } else if($status == 'rejected') {
                 $where_status = "status = 'rejected'";
             }
         } else {
-            $where_status = "status != 'trash' AND status != 'spam' AND status != 'approved' AND status != 'reject'";
+            $where_status = "status != 'trash' AND status != 'spam' AND status != 'approved' AND status != 'rejected'";
         }
 
         $leave_query = "SELECT 
@@ -170,7 +170,7 @@ class leave_List_Table extends WP_List_Table {
         $status_links = array(
             "all"       => ($_GET['status'] == 'all' || !$_GET['status'])?'All':"<a href='?page=".$_GET['page']."&status=all'>All</a>",
             "approved"  => $_GET['status'] == 'approved'?'Approved':"<a href='?page=".$_GET['page']."&status=approved'>Approved</a>",
-            "reject"    => $_GET['status'] == 'reject'?'Rejected':"<a href='?page=".$_GET['page']."&status=reject'>Rejected</a>",
+            "rejected"    => $_GET['status'] == 'rejected'?'Rejected':"<a href='?page=".$_GET['page']."&status=rejected'>Rejected</a>",
             "spam"      => $_GET['status'] == 'spam'?'Spam':"<a href='?page=".$_GET['page']."&status=spam'>Spam</a>",
             "trash"     => $_GET['status'] == 'trash'?'Trash':"<a href='?page=".$_GET['page']."&status=trash'>Trash</a>"
         );
@@ -211,8 +211,8 @@ class leave_List_Table extends WP_List_Table {
             } else if($status == 'approved') {
                 unset($actions["approved"]);
                 $actions["restore"] = sprintf('<a href="?page=%s&action=restore&leave_id=%s&status=%s&_wpnonce=%s" role="button">Unapprove</a>', $_GET['page'], $item['id'], $item['status'], $action_nonce);
-            } else if($status == 'reject') {
-                unset($actions["reject"]);
+            } else if($status == 'rejected') {
+                unset($actions["rejected"]);
             }
         } else {
             unset($actions["restore"]);
@@ -251,7 +251,7 @@ class leave_List_Table extends WP_List_Table {
     public function get_bulk_actions() {
         $actions = array(
             'approved'   => 'Approve',
-            'reject'    => 'Reject',
+            'rejected'    => 'Reject',
             'restore'   => 'Restore',
             'spam'      => 'Mark as spam',
             'trash'     => 'Move to Trash'
@@ -268,8 +268,8 @@ class leave_List_Table extends WP_List_Table {
                 $actions['delete'] = 'Delete Permanently';
             } else if($status == 'approved') {
                 unset($actions["approved"]);
-            } else if($status == 'reject') {
-                unset($actions["reject"]);
+            } else if($status == 'rejected') {
+                unset($actions["rejected"]);
             }
         } else {
             unset($actions["restore"]);
@@ -282,11 +282,12 @@ class leave_List_Table extends WP_List_Table {
         global $wpdb;
         $table_name = $wpdb->prefix . 'anzarianz_leaves';
         $action = isset($_GET['action'])? trim($_GET['action']) : "";
+        $rejection_note = isset($_GET['rejection_note'])? trim($_GET['rejection_note']) : "Admin rejected your request, reason not specified";
         $leave_id = isset($_GET['leave_id'])? intval($_GET['leave_id']) : "";
         $nonce = esc_attr( $_REQUEST['_wpnonce'] );
 
         // If the single action is triggered
-        if(($action === 'trash' || $action === 'spam' || $action === 'restore' || $action === 'approved' || $action === 'delete') && $leave_id) {
+        if(($action === 'trash' || $action === 'spam' || $action === 'restore' || $action === 'approved' || $action === 'delete' || $action === 'rejected') && $leave_id) {
             if ( ! wp_verify_nonce( $nonce, 'action_nonce' ) ) {
                 die( 'Go get a life script kiddies' );
             } else {
@@ -298,6 +299,8 @@ class leave_List_Table extends WP_List_Table {
                     $wpdb->query("update $table_name set status='added', rejection_note='Processing' WHERE id = $leave_id");
                 } else if ($action === 'approved') {
                     $wpdb->query("update $table_name set status='approved', rejection_note='Approved' WHERE id = $leave_id");
+                } else if ($action === 'rejected') {
+                    $wpdb->query("update $table_name set status='rejected', rejection_note='$rejection_note' WHERE id = $leave_id");
                 } else if ($action === 'delete') {
                     $wpdb->query("DELETE FROM $table_name WHERE id = $leave_id");
                 }
@@ -332,6 +335,13 @@ class leave_List_Table extends WP_List_Table {
 
             foreach ( $leave_ids as $id ) {
                 $wpdb->query("update $table_name set status='approved', rejection_note='Approved' WHERE id = $id");
+            }
+        } else if ( ( isset( $_GET['action'] ) && $_GET['action'] == 'rejected' )
+            && ( isset( $_GET['action2'] ) && $_GET['action2'] == 'rejected' )) {
+            $leave_ids = esc_sql( $_GET['leave_ids'] );
+
+            foreach ( $leave_ids as $id ) {
+                $wpdb->query("update $table_name set status='rejected', rejection_note='$rejection_note' WHERE id = $id");
             }
         } else if ( ( isset( $_GET['action'] ) && $_GET['action'] == 'delete' )
             && ( isset( $_GET['action2'] ) && $_GET['action2'] == 'delete' )) {
