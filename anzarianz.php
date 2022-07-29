@@ -28,3 +28,14 @@ require_once  __DIR__ . '/includes/leaves-db-table.php';
 require_once  __DIR__ . '/includes/leaves-api.php';
 //Admin menu
 require_once  __DIR__ . '/includes/admin-menu.php';
+
+function anzarianz_enqueue($hook) {
+    // Only add to the edit.php admin page.
+    // See WP docs.
+    // if ('edit.php' !== $hook) {
+    //     return;
+    // }
+    wp_enqueue_script('anzarianz_main_script', plugin_dir_url(__FILE__) . '/build/index.js');
+}
+
+add_action('admin_enqueue_scripts', 'anzarianz_enqueue');

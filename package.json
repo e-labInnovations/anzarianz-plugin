@@ -1,0 +1,28 @@
+{
+  "name": "anzarianz",
+  "version": "1.0.0",
+  "description": "WordPress plugin for Anzarianz project",
+  "main": "index.js",
+  "scripts": {
+    "build": "wp-scripts build",
+    "start": "wp-scripts start",
+    "dev": "wp-scripts start",
+    "devFast": "wp-scripts start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/e-labInnovations/anzarianz-plugin.git"
+  },
+  "author": "Mohammed Ashad - e-lab innovations",
+  "license": "ISC",
+  "devDependencies": {
+    "@wordpress/scripts": "^19.2.2"
+  },
+  "bugs": {
+    "url": "https://github.com/e-labInnovations/anzarianz-plugin/issues"
+  },
+  "homepage": "https://github.com/e-labInnovations/anzarianz-plugin#readme",
+  "dependencies": {
+    "moment": "^2.29.4"
+  }
+}

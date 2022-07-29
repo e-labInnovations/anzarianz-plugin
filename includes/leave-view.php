@@ -42,4 +42,5 @@ if($avatar == '	http://1.gravatar.com/avatar/?s=96&d=mm&r=g') {
         <a href="<?php echo '?page='.$_GET['page'].'&_wpnonce='.$action_nonce.'&action=spam&leave_id='.$leave_data->id ?>" class="button">Spam</a>
         <a href="<?php echo '?page='.$_GET['page'].'&_wpnonce='.$action_nonce.'&action=approved&leave_id='.$leave_data->id ?>" class="button">Approve</a>
     </p>
+    <div id='calendar'></div>
 </div>
