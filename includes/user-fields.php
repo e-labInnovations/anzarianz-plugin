@@ -102,9 +102,7 @@ function anzarianz_fields( $user ) {
 				<textarea name="permanent_address"
 					id="permanent_address"
 					rows="5"
-					cols="30">
-					<?php echo esc_attr( $permanent_address ); ?>
-				</textarea>
+					cols="30"><?php echo esc_attr( $permanent_address ); ?></textarea>
 			</td>
 		</tr>
 	</table>
