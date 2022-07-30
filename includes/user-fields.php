@@ -14,6 +14,7 @@ function anzarianz_fields( $user ) {
 	$dob = get_the_author_meta( 'dob', $user->ID );
 	$food_preference = get_the_author_meta( 'food_preference', $user->ID );
 	$religion_and_cast = get_the_author_meta( 'religion_and_cast', $user->ID );
+	$push_token = get_the_author_meta( 'push_token', $user->ID );
 	?>
 
 	<table class="form-table">
@@ -38,7 +39,7 @@ function anzarianz_fields( $user ) {
 			</td>
 		</tr>
 		<tr>
-			<th><label for="food_preference"><?php esc_html_e( 'Room Type', 'anzarianz' ); ?></label></th>
+			<th><label for="food_preference"><?php esc_html_e( 'Food Preference', 'anzarianz' ); ?></label></th>
 			<td>
                 <select name="food_preference" id="food_preference">
                     <option value="nonveg" <?php echo $food_preference == 'nonveg'?'selected':''; ?>>Non-Vegetarian</option>
@@ -54,6 +55,18 @@ function anzarianz_fields( $user ) {
 			       name="religion_and_cast"
 			       value="<?php echo esc_attr( $religion_and_cast ); ?>"
 			       class="regular-text"
+				/>
+			</td>
+		</tr>
+		<tr>
+			<th><label for="push_token"><?php esc_html_e( 'PushToken', 'anzarianz' ); ?></label></th>
+			<td>
+				<input type="text"
+			       id="push_token"
+			       name="push_token"
+			       value="<?php echo esc_attr( $push_token ); ?>"
+			       class="regular-text"
+				   readonly 
 				/>
 			</td>
 		</tr>
