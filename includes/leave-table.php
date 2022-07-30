@@ -1,6 +1,9 @@
 <?php
-//Source: https://wpmudev.com/blog/wordpress-admin-tables/
 
+require_once  __DIR__ . '/functions.php';
+
+
+//Source: https://wpmudev.com/blog/wordpress-admin-tables/
 if ( ! class_exists( 'WP_List_Table' ) ) {
     require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
@@ -295,12 +298,15 @@ class leave_List_Table extends WP_List_Table {
                     $wpdb->query("update $table_name set status='trash', rejection_note='Admin trashed your request' WHERE id = $leave_id");
                 } else if ($action === 'spam') {
                     $wpdb->query("update $table_name set status='spam', rejection_note='Your request has been marked as spam' WHERE id = $leave_id");
+                    send_leave_status_notification($leave_id, 'Warning', 'Your leave request has been marked as spam');
                 } else if ($action === 'restore') {
                     $wpdb->query("update $table_name set status='added', rejection_note='Processing' WHERE id = $leave_id");
                 } else if ($action === 'approved') {
                     $wpdb->query("update $table_name set status='approved', rejection_note='Approved' WHERE id = $leave_id");
+                    send_leave_status_notification($leave_id, 'Approved', 'Your leave request approved');
                 } else if ($action === 'rejected') {
                     $wpdb->query("update $table_name set status='rejected', rejection_note='$rejection_note' WHERE id = $leave_id");
+                    send_leave_status_notification($leave_id, 'Rejected', 'Your leave request rejected, Reason: '.$rejection_note);
                 } else if ($action === 'delete') {
                     $wpdb->query("DELETE FROM $table_name WHERE id = $leave_id");
                 }
@@ -321,6 +327,7 @@ class leave_List_Table extends WP_List_Table {
 
             foreach ( $leave_ids as $id ) {
                 $wpdb->query("update $table_name set status='spam', rejection_note='Your request has been marked as spam' WHERE id = $id");
+                send_leave_status_notification($leave_id, 'Warning', 'Your leave request has been marked as spam');
             }
         } else if ( ( isset( $_GET['action'] ) && $_GET['action'] == 'restore' )
             && ( isset( $_GET['action2'] ) && $_GET['action2'] == 'restore' )) {
@@ -335,6 +342,7 @@ class leave_List_Table extends WP_List_Table {
 
             foreach ( $leave_ids as $id ) {
                 $wpdb->query("update $table_name set status='approved', rejection_note='Approved' WHERE id = $id");
+                send_leave_status_notification($leave_id, 'Approved', 'Your leave request approved');
             }
         } else if ( ( isset( $_GET['action'] ) && $_GET['action'] == 'rejected' )
             && ( isset( $_GET['action2'] ) && $_GET['action2'] == 'rejected' )) {
@@ -342,6 +350,7 @@ class leave_List_Table extends WP_List_Table {
 
             foreach ( $leave_ids as $id ) {
                 $wpdb->query("update $table_name set status='rejected', rejection_note='$rejection_note' WHERE id = $id");
+                send_leave_status_notification($leave_id, 'Rejected', 'Your leave request rejected, Reason: '.$rejection_note);
             }
         } else if ( ( isset( $_GET['action'] ) && $_GET['action'] == 'delete' )
             && ( isset( $_GET['action2'] ) && $_GET['action2'] == 'delete' )) {
