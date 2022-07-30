@@ -6,6 +6,7 @@ WordPress plugin for Anzarianz project
 - [x] Update user fields in admin dashboard
 - [x] CRED api for leaves
 - [x] Add leaves admin page
+- [x] Add push notification for leave actions (approve, reject and spam)
 - [ ] Calculate total leaves
 - [ ] Show leave calendar
 - [ ] CRED api for commen leaves and events
