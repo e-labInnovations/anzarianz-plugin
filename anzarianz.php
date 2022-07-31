@@ -28,6 +28,10 @@ require_once  __DIR__ . '/includes/leaves-db-table.php';
 require_once  __DIR__ . '/includes/leaves-api.php';
 //Admin menu
 require_once  __DIR__ . '/includes/admin-menu.php';
+//Food timetable db table
+require_once  __DIR__ . '/includes/food-timetable-db-table.php';
+//Food timetable api
+require_once  __DIR__ . '/includes/food-timetable-api.php';
 
 function anzarianz_enqueue($hook) {
     // Only add to the edit.php admin page.
