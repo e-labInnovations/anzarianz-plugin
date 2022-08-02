@@ -15,8 +15,9 @@ function food_timetable_html() {
     $food_timetable_table->prepare_items();
     ?>
     <div class="wrap">    
-        <h2>Food List</h2>
-        <div id="nds-wp-list-table-demo">			
+        <h1 class="wp-heading-inline">Food List</h1>
+        <a href="?page=anzarianz_food_add_new" class="page-title-action">Add New</a>
+        <div id="nds-wp-list-table-demo">		
             <div id="nds-post-body">
                 <?php $food_timetable_table->views(); ?>	
                 <form id="nds-user-list-form" method="get">

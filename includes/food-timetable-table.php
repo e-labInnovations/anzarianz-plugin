@@ -162,7 +162,7 @@ class food_List_Table extends WP_List_Table {
 
     protected function get_views() { 
         $status_links = array(
-            "all"       => ($_GET['status'] == 'all' || !$_GET['status'])?'All':"<a href='?page=".$_GET['page']."&status=all'>All</a>",
+            "all"       => ($_GET['status'] == 'published' || !$_GET['status'])?'All':"<a href='?page=".$_GET['page']."&status=all'>All</a>",
             "trash"     => $_GET['status'] == 'trash'?'Trash':"<a href='?page=".$_GET['page']."&status=trash'>Trash</a>"
         );
         return $status_links;
