@@ -16,7 +16,7 @@ function anzarianz_create_food_timetable_db() {
         secondary_food varchar(60) NOT NULL DEFAULT '',
         time varchar(20) NOT NULL DEFAULT '',
         day tinyint unsigned NOT NULL,
-        status varchar(20) NOT NULL DEFAULT 'added',
+        status varchar(20) NOT NULL DEFAULT 'published',
 		UNIQUE KEY id (id)
 	) $charset_collate;";
 
