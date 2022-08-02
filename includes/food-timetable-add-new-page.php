@@ -46,8 +46,19 @@ function anzarianz_food_add_new_html() {
                         }
 
                         if($wpdb_success) {
-                            $page_name = menu_page_url("anzarianz_food_timetable");
-                            wp_redirect($page_name);
+                            $page_url = menu_page_url("anzarianz_food_timetable");
+                            wp_redirect($page_url);
+                            echo("<script>location.href = '".$page_url."'</script>");
+                            exit;
+                        } else {
+                            ?>
+                            <div class="notice notice-error is-dismissible"> 
+                                <p><strong>Database Error</strong></p>
+                                <button type="button" class="notice-dismiss">
+                                    <span class="screen-reader-text">Dismiss this notice.</span>
+                                </button>
+                            </div>
+                            <?php
                         }
                     }
                 } else {
