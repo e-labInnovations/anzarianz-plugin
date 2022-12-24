@@ -3,7 +3,7 @@
 function anzarianz_food_add_new_html() {
     global $wpdb;
     $table_name = $wpdb->prefix . 'anzarianz_food_timetable';
-    $food_id = $_GET['food_id'];
+    $food_id = isset($_GET['food_id'])?$_GET['food_id']:null;
     if($food_id) {
         $food_query = "SELECT * FROM $table_name WHERE id = $food_id";
         $food_data = $wpdb->get_results($food_query)[0];
@@ -12,6 +12,11 @@ function anzarianz_food_add_new_html() {
         $secondary_food = $food_data->secondary_food;
         $time = $food_data->time;
         $day = $food_data->day;
+        $guest_price = $food_data->guest_price;
+    } else {
+        $time = 'breakfast';
+        $day = 7;
+        $guest_price = 0;
     }
 ?>
     <div class="wrap">    
@@ -23,7 +28,8 @@ function anzarianz_food_add_new_html() {
                     $secondary_food = sanitize_text_field($_POST['secondary_food']);
                     $time = sanitize_text_field($_POST['time']);
                     $day = intval(sanitize_text_field($_POST['day']));
-                    if(!$primary_food || !$secondary_food || !$time || !$day) {
+                    $guest_price = intval(sanitize_text_field($_POST['guest_price']));
+                    if(!$primary_food || !$secondary_food || !$time || !$day || !$guest_price) {
                         ?>
                         <div class="notice notice-error is-dismissible"> 
                             <p><strong>All fileds are required</strong></p>
@@ -35,13 +41,14 @@ function anzarianz_food_add_new_html() {
                     } else {
                         //Update to db
                         if($food_id) {
-                            $wpdb_success = $wpdb->query("update $table_name set primary_food='$primary_food', secondary_food='$secondary_food', time='$time', day='$day' WHERE id = $food_id");
+                            $wpdb_success = $wpdb->query("update $table_name set primary_food='$primary_food', secondary_food='$secondary_food', time='$time', day='$day', guest_price='$guest_price' WHERE id = $food_id");
                         } else {
                             $wpdb_success = $wpdb->insert($table_name, array(
                                 'primary_food' => $primary_food,
                                 'secondary_food' => $secondary_food,
                                 'time' => $time,
-                                'day' => $day
+                                'day' => $day,
+                                'guest_price' => $guest_price
                             ));
                         }
 
@@ -122,6 +129,17 @@ function anzarianz_food_add_new_html() {
                             <option value="5" <?php echo $day == 5?'selected':''; ?>>Friday</option>
                             <option value="6" <?php echo $day == 6?'selected':''; ?>>Saturday</option>
                         </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label for="guest_price">Guest Price</label></th>
+                    <td>
+                        <input type="number"
+                            id="guest_price"
+                            name="guest_price"
+                            value="<?php echo $food_id?$guest_price:0 ?>"
+                            class="regular-text"
+                        />
                     </td>
                 </tr>
             </table>

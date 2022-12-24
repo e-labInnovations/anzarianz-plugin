@@ -21,6 +21,7 @@ class food_List_Table extends WP_List_Table {
             'secondary_food'=> 'Secondary Food',
             'time'          => 'Time',
             'day'           => 'Day',
+            'guest_price'   => 'Guest Price'
         );
     }
     public function no_items() {
@@ -132,6 +133,8 @@ class food_List_Table extends WP_List_Table {
             case 'day':
                 $food_day = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
                 return esc_html($food_day[$item['day']-1]);
+            case 'guest_price':
+                return '₹ ' . esc_html($item['guest_price']);
             return 'Unknown';
         }
     }

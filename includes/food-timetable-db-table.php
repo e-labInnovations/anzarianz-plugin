@@ -16,6 +16,7 @@ function anzarianz_create_food_timetable_db() {
         secondary_food varchar(60) NOT NULL DEFAULT '',
         time varchar(20) NOT NULL DEFAULT '',
         day tinyint unsigned NOT NULL,
+        guest_price int unsigned NOT NULL DEFAULT 0,
         status varchar(20) NOT NULL DEFAULT 'published',
 		UNIQUE KEY id (id)
 	) $charset_collate;";
@@ -32,6 +33,7 @@ function onAdminRefresh02() {
         'primary_food' => 'പൂരി',
         'secondary_food' => 'മസാല, കട്ടൻ',
         'time' => 'morning',
-        'day' => 1
+        'day' => 1,
+        'guest_price' => 40
     ));
 }
