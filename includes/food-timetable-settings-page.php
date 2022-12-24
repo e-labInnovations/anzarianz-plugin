@@ -11,7 +11,7 @@ function anzarianz_food_timetable_settings_html() {
     <div class="wrap">    
         <h2>Food Timetable Settings</h2>
         <?php
-            if($_POST['justsubmitted'] == 'true') {
+            if(isset($_POST['justsubmitted'])?$_POST['justsubmitted']:false) {
                 if(wp_verify_nonce($_POST['afttNonce'], 'save_anzarianz_food_timetable_timings') && current_user_can('manage_options')) {
                     $food_timetable_data['breakfast']['start'] = $_POST['breakfast_start'];
                     $food_timetable_data['breakfast']['end']   = $_POST['breakfast_end'];
