@@ -4,6 +4,7 @@ require_once  __DIR__ . '/leave-page.php';
 require_once  __DIR__ . '/food-timetable-page.php';
 require_once  __DIR__ . '/food-timetable-settings-page.php';
 require_once  __DIR__ . '/food-timetable-add-new-page.php';
+require_once  __DIR__ . '/mess-guest-page.php';
 
 //Add Admin Menu
 add_action('admin_menu', 'anzarianz_leave_menu');
@@ -50,6 +51,16 @@ function anzarianz_leave_menu() {
         'manage_options',
         "anzarianz_food_timetable_settings",
         "anzarianz_food_timetable_settings_html"
+    );
+
+    add_menu_page(
+        'Mess Guest',
+        'Mess Guest',
+        'manage_options',
+        'anzarianz_mess_guest',
+        'mess_guest_html',
+        'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGNsYXNzPSJpb25pY29uIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiI+CiAgICA8dGl0bGU+UmVzdGF1cmFudDwvdGl0bGU+CiAgICA8cGF0aCBmaWxsPSIjYTdhYWFkIiBkPSJNMzU3LjU3IDIyMy45NGE3OS40OCA3OS40OCAwIDAwNTYuNTgtMjMuNDRsNzctNzYuOTVjNi4wOS02LjA5IDYuNjUtMTYgLjg1LTIyLjM5YTE2IDE2IDAgMDAtMjMuMTctLjU2bC02OC42MyA2OC41OGExMi4yOSAxMi4yOSAwIDAxLTE3LjM3IDBjLTQuNzktNC43OC00LjUzLTEyLjg2LjI1LTE3LjY0bDY4LjMzLTY4LjMzYTE2IDE2IDAgMDAtLjU2LTIzLjE2QTE1LjYyIDE1LjYyIDAgMDA0NDAuMjcgNTZhMTYuNzEgMTYuNzEgMCAwMC0xMS44MSA0LjlsLTY4LjI3IDY4LjI2YTEyLjI5IDEyLjI5IDAgMDEtMTcuMzcgMGMtNC43OC00Ljc4LTQuNTMtMTIuODYuMjUtMTcuNjRsNjguMzMtNjguMzFhMTYgMTYgMCAwMC0uNTYtMjMuMTZBMTUuNjIgMTUuNjIgMCAwMDQwMC4yNiAxNmExNi43MyAxNi43MyAwIDAwLTExLjgxIDQuOUwzMTEuNSA5Ny44NWE3OS40OSA3OS40OSAwIDAwLTIzLjQ0IDU2LjU5djguMjNhMTYgMTYgMCAwMS00LjY5IDExLjMzbC0zNS42MSAzNS42MmE0IDQgMCAwMS01LjY2IDBMNjguODIgMzYuMzNhMTYgMTYgMCAwMC0yMi41OC0uMDZDMzEuMDkgNTEuMjggMjMgNzIuNDcgMjMgOTcuNTRjLS4xIDQxLjQgMjEuNjYgODkgNTYuNzkgMTI0LjA4bDg1LjQ1IDg1LjQ1QTY0Ljc5IDY0Ljc5IDAgMDAyMTEgMzI2YTY0IDY0IDAgMDAxNi4yMS0yLjA4IDE2LjI0IDE2LjI0IDAgMDE0LjA3LS41MyAxNS45MyAxNS45MyAwIDAxMTAuODMgNC4yNWwxMS4zOSAxMC41MmExNi4xMiAxNi4xMiAwIDAxNC42IDExLjIzdjUuNTRhNDcuNzMgNDcuNzMgMCAwMDEzLjc3IDMzLjY1bDkwLjA1IDkxLjU3LjA5LjFhNTMuMjkgNTMuMjkgMCAwMDc1LjM2LTc1LjM3TDMwMi4zOSAyNjkuOWE0IDQgMCAwMTAtNS42NkwzMzggMjI4LjYzYTE2IDE2IDAgMDExMS4zMi00LjY5eiIvPgogICAgPHBhdGggZmlsbD0iI2E3YWFhZCIgZD0iTTIxMSAzNThhOTcuMzIgOTcuMzIgMCAwMS02OC4zNi0yOC4yNWwtMTMuODYtMTMuODZhOCA4IDAgMDAtMTEuMyAwbC04NSA4NC41NmMtMTUuMTUgMTUuMTUtMjAuNTYgMzcuNDUtMTMuMDYgNTkuMjlhMzAuNjMgMzAuNjMgMCAwMDEuNDkgMy42QzMxIDQ4NCA1MC41OCA0OTYgNzIgNDk2YTU1LjY4IDU1LjY4IDAgMDAzOS42NC0xNi40NEwyMjUgMzY1LjY2YTQuNjkgNC42OSAwIDAwMS4zMi0zLjcydi0uMjZhNC42MyA0LjYzIDAgMDAtNS4xNS00LjI3QTk3LjA5IDk3LjA5IDAgMDEyMTEgMzU4eiIvPgo8L3N2Zz4=',
+        4
     );
 }
 

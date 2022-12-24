@@ -32,6 +32,8 @@ require_once  __DIR__ . '/includes/admin-menu.php';
 require_once  __DIR__ . '/includes/food-timetable-db-table.php';
 //Food timetable api
 require_once  __DIR__ . '/includes/food-timetable-api.php';
+//Mess Guest db table
+require_once  __DIR__ . '/includes/mess-guest-db-table.php';
 
 function anzarianz_enqueue($hook) {
     // Only add to the edit.php admin page.
