@@ -17,7 +17,7 @@ function anzarianz_food_add_new_html() {
     <div class="wrap">    
         <h2>Add Food</h2>
         <?php
-            if($_POST['justsubmitted'] == 'true') {
+            if(isset($_POST['justsubmitted'])?$_POST['justsubmitted']:false) {
                 if(wp_verify_nonce($_POST['afanNonce'], 'save_anzarianz_food_add_new') && current_user_can('manage_options')) {
                     $primary_food = sanitize_text_field($_POST['primary_food']);
                     $secondary_food = sanitize_text_field($_POST['secondary_food']);

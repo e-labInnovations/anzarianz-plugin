@@ -19,7 +19,7 @@ function leavesHTML() {
         echo $template;
         
         $leave_table = new leave_List_Table();
-        $leave_table->items = $contacts;
+        // $leave_table->items = $contacts;
         $leave_table->prepare_items();
         ?>
         <div class="wrap">    

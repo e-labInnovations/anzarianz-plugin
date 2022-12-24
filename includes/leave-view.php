@@ -15,7 +15,7 @@ if($avatar == '	http://1.gravatar.com/avatar/?s=96&d=mm&r=g') {
 
 ?>
 <div class="wrap">    
-    <h2><?php echo $leave_data->subject ?></h2>
+    <h2><?php echo $user_info->display_name ?></h2>
     <img src="<?php echo $avatar ?>" class="avatar avatar-96 photo" height="96" width="96" loading="lazy" />
     <p><b>Name: </b> <?php echo $user_info->display_name ?></p>
     <p><b>Room NO: </b> <?php echo get_the_author_meta( 'room_no', $leave_data->user_id ); ?></p>

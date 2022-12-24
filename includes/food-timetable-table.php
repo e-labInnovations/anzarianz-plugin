@@ -32,7 +32,7 @@ class food_List_Table extends WP_List_Table {
         $table_name = $wpdb->prefix . 'anzarianz_food_timetable';		
         $orderby = ( isset( $_GET['orderby'] ) ) ? esc_sql( $_GET['orderby'] ) : null;
         $order = ( isset( $_GET['order'] ) ) ? esc_sql( $_GET['order'] ) : 'DESC';
-        $status = $_GET['status'];
+        $status = isset($_GET['status'])?$_GET['status']:'all';
         if($status) {
             if($status == 'all' || $status == 'published') {
                 $where_status = "status != 'trash'";
@@ -160,10 +160,11 @@ class food_List_Table extends WP_List_Table {
         return $filtered_table_data;
     }
 
-    protected function get_views() { 
+    protected function get_views() {
+        $status = isset($_GET['status'])?$_GET['status']:'published';
         $status_links = array(
-            "all"       => ($_GET['status'] == 'published' || !$_GET['status'])?'All':"<a href='?page=".$_GET['page']."&status=all'>All</a>",
-            "trash"     => $_GET['status'] == 'trash'?'Trash':"<a href='?page=".$_GET['page']."&status=trash'>Trash</a>"
+            "all"       => $status == 'published'?'All':"<a href='?page=".$_GET['page']."&status=all'>All</a>",
+            "trash"     => $status == 'trash'?'Trash':"<a href='?page=".$_GET['page']."&status=trash'>Trash</a>"
         );
         return $status_links;
     }
@@ -186,7 +187,7 @@ class food_List_Table extends WP_List_Table {
             'trash'     => sprintf('<a href="?page=%s&action=trash&food_id=%s&status=%s&_wpnonce=%s">Trash</a>', $_GET['page'], $item['id'], $item['status'], $action_nonce),
         );
 
-        $status = $_GET['status'];
+        $status = isset($_GET['status'])?$_GET['status']:'all';
         if($status) {
             if($status == 'all') {
                 unset($actions["restore"]);
@@ -223,7 +224,7 @@ class food_List_Table extends WP_List_Table {
             'trash'     => 'Move to Trash'
         );
 
-        $status = $_GET['status'];
+        $status = isset($_GET['status'])?$_GET['status']:'all';
         if($status) {
             if($status == 'all') {
                 unset($actions["restore"]);
@@ -243,7 +244,7 @@ class food_List_Table extends WP_List_Table {
         $table_name = $wpdb->prefix . 'anzarianz_food_timetable';
         $action = isset($_GET['action'])? trim($_GET['action']) : "";
         $food_id = isset($_GET['food_id'])? intval($_GET['food_id']) : "";
-        $nonce = esc_attr( $_REQUEST['_wpnonce'] );
+        $nonce = isset($_REQUEST['_wpnonce'])?esc_attr($_REQUEST['_wpnonce']):null;
 
         // If the single action is triggered
         if(($action === 'trash' || $action === 'restore' || $action === 'delete') && $food_id) {

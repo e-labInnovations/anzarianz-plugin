@@ -34,7 +34,7 @@ class leave_List_Table extends WP_List_Table {
         $table_name = $wpdb->prefix . 'anzarianz_leaves';		
         $orderby = ( isset( $_GET['orderby'] ) ) ? esc_sql( $_GET['orderby'] ) : 'updated_at';
         $order = ( isset( $_GET['order'] ) ) ? esc_sql( $_GET['order'] ) : 'DESC';
-        $status = $_GET['status'];
+        $status = isset($_GET['status'])?$_GET['status']:'all';
         if($status) {
             if($status == 'all' || $status == 'added') {
                 $where_status = "status != 'trash' AND status != 'spam' AND status != 'approved' AND status != 'rejected'";
@@ -169,13 +169,14 @@ class leave_List_Table extends WP_List_Table {
         return $filtered_table_data;
     }
 
-    protected function get_views() { 
+    protected function get_views() {
+        $status = isset($_GET['status'])?$_GET['status']:'all';
         $status_links = array(
-            "all"       => ($_GET['status'] == 'all' || !$_GET['status'])?'All':"<a href='?page=".$_GET['page']."&status=all'>All</a>",
-            "approved"  => $_GET['status'] == 'approved'?'Approved':"<a href='?page=".$_GET['page']."&status=approved'>Approved</a>",
-            "rejected"    => $_GET['status'] == 'rejected'?'Rejected':"<a href='?page=".$_GET['page']."&status=rejected'>Rejected</a>",
-            "spam"      => $_GET['status'] == 'spam'?'Spam':"<a href='?page=".$_GET['page']."&status=spam'>Spam</a>",
-            "trash"     => $_GET['status'] == 'trash'?'Trash':"<a href='?page=".$_GET['page']."&status=trash'>Trash</a>"
+            "all"       => $status == 'all'?'All':"<a href='?page=".$_GET['page']."&status=all'>All</a>",
+            "approved"  => $status == 'approved'?'Approved':"<a href='?page=".$_GET['page']."&status=approved'>Approved</a>",
+            "rejected"  => $status == 'rejected'?'Rejected':"<a href='?page=".$_GET['page']."&status=rejected'>Rejected</a>",
+            "spam"      => $status == 'spam'?'Spam':"<a href='?page=".$_GET['page']."&status=spam'>Spam</a>",
+            "trash"     => $status == 'trash'?'Trash':"<a href='?page=".$_GET['page']."&status=trash'>Trash</a>"
         );
         return $status_links;
     }
@@ -202,7 +203,7 @@ class leave_List_Table extends WP_List_Table {
             'spam'      => sprintf('<a href="?page=%s&action=spam&leave_id=%s&status=%s&_wpnonce=%s">Spam</a>', $_GET['page'], $item['id'], $item['status'], $action_nonce),
         );
 
-        $status = $_GET['status'];
+        $status = isset($_GET['status'])?$_GET['status']:'all';
         if($status) {
             if($status == 'all') {
                 unset($actions["restore"]);
@@ -260,7 +261,7 @@ class leave_List_Table extends WP_List_Table {
             'trash'     => 'Move to Trash'
         );
 
-        $status = $_GET['status'];
+        $status = isset($_GET['status'])?$_GET['status']:'all';
         if($status) {
             if($status == 'all') {
                 unset($actions["restore"]);
@@ -287,7 +288,7 @@ class leave_List_Table extends WP_List_Table {
         $action = isset($_GET['action'])? trim($_GET['action']) : "";
         $rejection_note = isset($_GET['rejection_note'])? trim($_GET['rejection_note']) : "Admin rejected your request, reason not specified";
         $leave_id = isset($_GET['leave_id'])? intval($_GET['leave_id']) : "";
-        $nonce = esc_attr( $_REQUEST['_wpnonce'] );
+        $nonce = isset($_REQUEST['_wpnonce'])?esc_attr($_REQUEST['_wpnonce']):null;
 
         // If the single action is triggered
         if(($action === 'trash' || $action === 'spam' || $action === 'restore' || $action === 'approved' || $action === 'delete' || $action === 'rejected') && $leave_id) {

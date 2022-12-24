@@ -11,7 +11,7 @@ function food_timetable_html() {
     echo $template;
     
     $food_timetable_table = new food_List_Table();
-    $food_timetable_table->items = $contacts;
+    // $food_timetable_table->items = $contacts;
     $food_timetable_table->prepare_items();
     ?>
     <div class="wrap">    
